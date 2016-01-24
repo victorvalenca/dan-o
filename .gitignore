@@ -1,7 +1,6 @@
 *.class
 
 # Eclipse Project files
-.settings/*
 build/*
 
 # Mobile Tools for Java (J2ME)
