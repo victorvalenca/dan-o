@@ -1,7 +1,6 @@
 *.class
 
 # Eclipse Project files
-.classpath
 .project
 build/*
 
@@ -67,3 +66,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 /build/
+.classpath
+.classpath
