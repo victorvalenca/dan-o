@@ -1,8 +1,6 @@
-<hr/>
-<footer>
-	<div class="row">
-		<div class="col-md-6">
-			<p>&copy; 2016 - My pLace</p>
-		</div>
+<hr />
+<div class="row">
+	<div class="col-md-12">
+		<p class="text-center">© 2016 - My pLace Entertainment</p>
 	</div>
-</footer>
+</div>

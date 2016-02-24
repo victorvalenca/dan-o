@@ -9,7 +9,8 @@
 </head>
 <body>
 <%@ include file="../Shared/header.jsp" %>
-<h1>HELLO WORLD</h1>
+<br/>
+<div class="container"></div>
 </body>
 <%@ include file="../Shared/footer.jsp" %>
 </html>
