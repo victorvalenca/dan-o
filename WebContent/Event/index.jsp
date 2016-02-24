@@ -4,12 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Index Event - My pLace</title>
+<title>Event List - My pLace</title>
 <%@ include file="../Shared/scripts.jsp" %>
 </head>
 <body>
 <%@ include file="../Shared/header.jsp" %>
-<h1>HELLO WORLD</h1>
+<br/>
+<div class="container"></div>
 </body>
 <%@ include file="../Shared/footer.jsp" %>
 </html>

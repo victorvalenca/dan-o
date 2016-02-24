@@ -1,3 +1,11 @@
+.full {
+    background: url('/dan-o/assets/img/city_bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
 .navbar{
   margin-bottom:0;
   border:none;
@@ -8,7 +16,7 @@
 }
 
 .hero{
-  background:url(../../assets/img/city_bg.jpg) no-repeat center;
+  background:url(/dan-o/assets/img/city_bg.jpg) no-repeat center center fixed;
   background-size:cover;
   border:none;
   margin-bottom: 0px;
