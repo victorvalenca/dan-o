@@ -29,7 +29,11 @@
 
 <body>
 	<header id="top" class="header">
-		<div class="text-vertical-center"></div>
+		<div class="text-vertical-center">
+		
+		<!-- ENTER YOUR CODE HERE -->
+		
+		</div>
 	</header>
 
 

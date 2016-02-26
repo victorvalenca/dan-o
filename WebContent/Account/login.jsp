@@ -29,41 +29,47 @@
 
 <body>
 	<header id="top" class="header">
-	<div class="text-vertical-center">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 col-md-push-7 phone-preview">
-					<div class="iphone-mockup"></div>
-				</div>
-				<div class="col-md-6 col-md-offset-2 col-md-pull-3 get-it">
-					<h1>My pLace Entertainment</h1>
-					<form class="form-horizontal">
-						<div class="form-group">
-							<div class="col-sm-4">
-								<label class="control-label" for="txtEmail"><strong>Email:
-								</strong></label>
+		<div class="text-vertical-center">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-md-push-7 phone-preview">
+						<div class="iphone-mockup"></div>
+					</div>
+					<div class="col-md-6 col-md-offset-2 col-md-pull-3 get-it">
+						<h1>My pLace Entertainment</h1>
+						<form class="form-horizontal">
+							<div class="form-group">
+								<div class="col-sm-4">
+									<label class="control-label" for="txtEmail"><strong>Email:
+									</strong></label>
+								</div>
+								<div class="col-sm-8">
+									<input class="form-control" type="email" name="txtEmail"
+										required placeholder="Email/Username" autofocus
+										autocomplete="off" inputmode="email" />
+								</div>
 							</div>
-							<div class="col-sm-8">
-								<input class="form-control" type="email" name="txtEmail"
-									required placeholder="Email/Username" autofocus
-									autocomplete="off" inputmode="email" />
+							<div class="form-group">
+								<div class="col-md-4">
+									<label class="control-label">Password: </label>
+								</div>
+								<div class="col-md-8">
+									<input class="form-control" type="password" name="txtPassword"
+										required placeholder="Password" autofocus />
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-4">
-								<label class="control-label">Password: </label>
+							<div class="form-group">
+							<!-- TODO: Configure links for buttons -->
+								<button class="btn btn-default" type="button">Login</button>
+								<button class="btn btn-default" type="button">Register </button>
+								<button class="btn btn-default" type="button">Continue as Guest</button>
 							</div>
-							<div class="col-md-8">
-								<input class="form-control" type="password" name="txtPassword"
-									required placeholder="Password" autofocus />
-							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
 
-	</div>
+		</div>
 	</header>
 
 

@@ -1,4 +1,4 @@
-<div class="navbar navbar-inverse navbar-fixed-top">
+ <div class="navbar navbar-inverse navbar-static-top">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -27,13 +27,13 @@
 					data-toggle="dropdown" role="button" aria-expanded="false">Organizations<span
 						class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<!-- FILL IN WITH ORG STUFF -->
+					<!-- TODO: Add Organization Info -->
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-expanded="false">Viewers<span
 						class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<!-- FILL IN WITH VIEWER STUFF -->
+						<!-- TODO: Add instruction paragraph -->
 					</ul></li>
 			</ul>
 		</div>
