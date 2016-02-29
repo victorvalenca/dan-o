@@ -14,29 +14,100 @@
 	background-color: #aaff88;
 	font-weight: bold;
 }
-#sidebar.clicked {
+#case.clicked #sidebar {
 	width: 49px;
 }
-#sidebar:not(.clicked) .frame_image {
-	width: 200px;
-	height: 200px;
+#case:not(.clicked) #sidebar img.frame_image {
+	width: 500px;
+	height: 500px;
 }
-#sidebar:not(.clicked) a.clicker {
+#case:not(.clicked) #sidebar a#clicker {
 	width: 50px;
 	height: 50px;
 	margin-right: 10px;
-	margin-bottom: 10px;
-	background-image: url("navicon.png");
+	background-size: 50px 50px;
 }
-#sidebar.clicked .frame_image,
-#sidebar.clicked a.clicker {
+#case:not(.clicked) #sidebar a.box_item {
+	width: 499px;
+	height: 74px;
+	background-color: #ffaa88;
+}
+#case.clicked #sidebar img.frame_image,
+#case.clicked #sidebar a#clicker,
+#case.clicked #sidebar a.box_item {
 	width: 25px;
 	height: 25px;
-	margin-bottom: 10px;
+	background-size: 25px 25px;
 }
-
+#case.clicked #sidebar a.box_item {
+	color: rgba(0,0,0,0);
+	background-image: url("placeholder.png")
+}
+#case.clicked #sidebar h3#side_text {
+	display: none;
+}
+#sidebar a#clicker {
+	background-image: url("navicon.png");
+}
+#sidebar img.frame_image {
+	margin-bottom: 50px;
+}
+#sidebar a.box_item {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #008888;
+}
+#case:not(.clicked) #base {
+	margin-left: 750px;
+}
+#case.clicked #base {
+	margin-left: 50px;
+}
+#base {
+	position: dynamic;
+}
+#base img.banner_image {
+	margin-top: 100px;
+	margin-bottom: 20px;
+	width: 90%;
+	height: 400px;
+}
+#case.clicked #base span#event_minbox {
+	float: left;
+	width: calc(45% - 12px);
+	margin-right: 10px;
+}
+#case.clicked #base span#cal_minbox {
+	float: right;
+	width: calc(45% - 12px);
+	margin-left: 10px;
+}
+#base span#event_minbox {
+	margin-bottom: 20px;
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+	height: 400px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+	background-color: #ffff00;
+}
+#base span#cal_minbox {
+	margin-bottom: 20px;
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+	height: 400px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+	background-color: #00ffff;
+}
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
+	text-align: center;
+	margin-bottom: 10px;
 }
