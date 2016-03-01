@@ -9,25 +9,52 @@
 </head>
 <body>
 	<%@ include file="../Shared/header.jsp"%>
-	<ol class="breadcrumb">
-		<li><span>Home</span></li>
-	</ol>
+
 	<div class="row-fluid">
 		<div class="col-md-6">
 			<h1>Manage Account</h1>
 		</div>
 		<div class="col-md-6">
 			<br />
-			<div class="btn-group">
-				<!-- TODO: Configure links for buttons -->
-				<button class="btn btn-default" type="button">Back</button>
-				<button class="btn btn-default" type="button">Create</button>
-			</div>
+			<p>Select an option below to get started:</p>
 		</div>
+
 	</div>
+	<hr />
 	<div class="row-fluid">
 		<div class="col-md-12">
-			<!-- TODO: Add instruction paragraph -->
+			<div class="col-md-4">
+				<h4>Organization</h4>
+				<hr />
+				<ul>
+					<li>Change Name</li>
+					<li>Change Background</li>
+					<li>Change Logo</li>
+					<li>Manage Events</li>
+					<li>Delete Organization</li>
+				</ul>
+				<hr />
+			</div>
+			<div class="col-md-4">
+				<h4>Twitter</h4>
+				<hr />
+				<ul>
+					<li>Configure Twitter</li>
+				</ul>
+				<hr />
+			</div>
+			<div class="col-md-4">
+				<h4>User</h4>
+				<hr />
+				<ul>
+					<li>Change Name</li>
+					<li>Change Background</li>
+					<li>Change Logo</li>
+					<li>Manage Events</li>
+					<li>Delete Organization</li>
+				</ul>
+				<hr />
+			</div>
 		</div>
 	</div>
 	<hr>
