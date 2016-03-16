@@ -23,10 +23,10 @@
 						can we help you?</p>
 					<p class="text-center">
 						<a class="btn btn-primary btn-lg" role="button"
-							href="/MypLaceEntertainmentV2/User/main.jsp">I am a User <i
+							href="/dan-o/User/main.jsp">I am a User <i
 							class="glyphicon glyphicon-chevron-right"></i>
 						</a><a class="btn btn-success btn-lg" role="button"
-							href="/MypLaceEntertainmentV2/Organization/main.jsp">I am an
+							href="/dan-o/Organization/main.jsp">I am an
 							Organization <i class="glyphicon glyphicon-chevron-right"></i>
 						</a>
 					</p>

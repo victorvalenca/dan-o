@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand navbar-link"
-				href="/MypLaceEntertainmentV2/index.jsp"><span
+				href="/dan-o/index.jsp"><span
 				class="glyphicon glyphicon-home"></span> My pLace</a>
 			<button class="navbar-toggle collapsed" data-toggle="collapse"
 				data-target="#navcol-1">
@@ -13,11 +13,11 @@
 		<div class="collapse navbar-collapse" id="navcol-1">
 			<ul class="nav navbar-nav">
 				<li class="active" role="presentation"><a
-					href="/MypLaceEntertainmentV2/about.jsp">About </a></li>
+					href="/dan-o/about.jsp">About </a></li>
 				<li role="presentation"><a
-					href="/MypLaceEntertainmentV2/Event/list.jsp">Guest </a></li>
+					href="/dan-o/Event/list.jsp">Guest </a></li>
 				<li role="presentation"><a
-					href="/MypLaceEntertainmentV2/User/main.jsp">User </a></li>
+					href="/dan-o/User/main.jsp">User </a></li>
 			</ul>
 			<form class="navbar-form navbar-right">
 				<div class="form-group">

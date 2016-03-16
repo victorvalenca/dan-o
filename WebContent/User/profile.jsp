@@ -11,7 +11,7 @@
 	<%@ include file="../Shared/authUserHeader.jsp"%>
 	<div class="container text-center">
 		<div class="jumbotron hero">
-			<img src="/MypLaceEntertainmentV2/assets/img/city_bg.jpg"
+			<img src="/dan-o/assets/img/city_bg.jpg"
 				class="img-circle" height="100" width="100" alt="logo">
 			<p style="color: white;">Account Name</p>
 		</div>

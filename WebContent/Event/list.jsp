@@ -86,7 +86,7 @@
 					%>
 
 					<div class="thumbnail col-md-4">
-						<img src="/MypLaceEntertainmentV2/assets/img/city_bg.jpg"
+						<img src="/dan-o/assets/img/city_bg.jpg"
 							alt="...">
 						<div class="caption">
 							<h3>
