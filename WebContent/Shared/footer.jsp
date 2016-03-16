@@ -1,6 +1,7 @@
-<hr />
-<div class="row">
-	<div class="col-md-12">
-		<p class="text-center">© 2016 - My pLace Entertainment</p>
-	</div>
-</div>
+<hr>
+<footer>
+	<p class="text-center">
+		<i class="glyphicon glyphicon-copyright-mark"></i> 2016 - My pLace
+		Entertainment
+	</p>
+</footer>
