@@ -14,8 +14,6 @@
 			<ul class="nav navbar-nav">
 				<li class="active" role="presentation"><a
 					href="/dan-o/about.jsp">About </a></li>
-				<li class="active" role="presentation"><a
-					href="/dan-o/Event/list.jsp">Event </a></li>
 			</ul>
 		</div>
 	</div>

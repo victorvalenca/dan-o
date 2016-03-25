@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,31 +21,21 @@
 			<div class="col-md-3">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Search By:</h3>
+						<h3 class="panel-title">Commands:</h3>
 					</div>
 					<div class="panel-body">
-						<form>
+						<form action="searchServlet" method="post">
+							<p>Page Size</p>
 							<div class="form-group">
-								<div class="radio">
-									<label class="control-label"> <input type="checkbox">
-										Title
-									</label>
-								</div>
-								<div class="radio">
-									<label class="control-label"> <input type="checkbox">
-										Date
-									</label>
-								</div>
-								<div class="radio">
-									<label class="control-label"> <input type="checkbox">Notes
-									</label>
-								</div>
+								<input type="radio" name="searchType" value="title">
+								Title<br> <input type="radio" name="searchType"
+									value="notes"> Notes
 							</div>
 							<div class="form-group">
 								<input class="form-control" type="text" placeholder="Search">
 							</div>
 							<div class="form-group">
-								<button class="btn btn-default" type="button">Search</button>
+								<button class="btn btn-default" type="submit" value="Search">Search</button>
 							</div>
 						</form>
 					</div>
@@ -54,7 +46,7 @@
 					url="jdbc:mysql://localhost:3307/myplace_data" user="root"
 					password="Woodpecker99" />
 
-				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event LIMIT 9; </sql:query>
+				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event; </sql:query>
 
 				<div class="row">
 					<%
@@ -86,11 +78,11 @@
 					%>
 
 					<div class="thumbnail col-md-4">
-						<img src="/dan-o/assets/img/city_bg.jpg"
-							alt="...">
+						<img src="/dan-o/assets/img/city_bg.jpg" alt="...">
 						<div class="caption">
 							<h3>
-								<a href="details.jsp?ID=${row.ID}"><c:out value="${row.Name}" /></a>
+								<a href="details.jsp?ID=${row.ID}"><c:out
+										value="${row.Name}" /></a>
 							</h3>
 							<p>
 								Hosted By:
@@ -98,12 +90,13 @@
 							</p>
 							<p>
 								Event Date:
-								<c:out value="${row.DateOfEvent}" />
+								<fmt:formatDate type="date" dateStyle="long" 
+									value="${row.DateOfEvent}" />
 							</p>
 
 							<span class="label label-success">Going: <c:out
 									value='${countA.rowsByIndex[0][0]}' /></span> <span
-								class="label label-info">Maybe: <c:out
+								class="label label-info">Interested: <c:out
 									value='${countI.rowsByIndex[0][0]}' /></span> <span
 								class="label label-danger">Not Going: <c:out
 									value='${countN.rowsByIndex[0][0]}' /></span>

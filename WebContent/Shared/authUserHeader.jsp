@@ -5,7 +5,8 @@
             </div>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav">
-                    <li class="active" role="presentation"><a href="/dan-o/about.jsp">About </a></li>
+                    <li role="presentation"><a href="/dan-o/about.jsp">About </a></li>
+                    <li role="presentation"><a href="/dan-o/Organization/main.jsp">Organization </a></li>
                     <li role="presentation"><a href="/dan-o/Event/list.jsp">Events </a></li>
                     <li role="presentation"><a href="/dan-o/account.jsp">Settings </a></li>
                 </ul>
