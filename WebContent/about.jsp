@@ -8,7 +8,18 @@
 <%@ include file="../Shared/scripts.jsp"%>
 </head>
 <body>
-<%@ include file="../Shared/blankHeader.jsp"%>
+
+	<%
+		if (request.getSession().getAttribute("name") == null) {
+	%>
+	<%@ include file="../Shared/blankHeader.jsp"%>
+	<%
+		} else {
+	%>
+	<%@ include file="../Shared/authUserHeader.jsp"%>
+	<%
+		}
+	%>
 <div class="jumbotron hero">
         <div class="container">
             <div class="row">

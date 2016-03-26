@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<% if(request.getSession().getAttribute("name")==null){ response.sendRedirect("/dan-o/User/main.jsp"); }%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -58,11 +59,11 @@
 								value="9" />
 						</sql:query>
 						<div class="container text-center">
-							<img src="/dan-o/assets/img/city_bg.jpg" class="img-circle"
+							<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" class="img-circle"
 								height="100" width="100" alt="logo">
 							<p>
 								<a
-									href="/dan-o/Organization/profile.jsp?ID=${row.Organization_ID}"
+									href="${pageContext.request.contextPath}/Organization/profile.jsp?ID=${row.Organization_ID}"
 									style="color: white"><c:out
 										value="${result2.rowsByIndex[0][0]}" /></a>
 							</p>

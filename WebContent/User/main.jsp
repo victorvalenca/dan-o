@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<% if(request.getSession().getAttribute("name")!=null){ response.sendRedirect("/dan-o/User/profile.jsp?ID="+request.getSession().getAttribute("UserID")); }%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,9 +16,9 @@
 				<div class="col-md-6"></div>
 				<div class="col-md-6">
 					<h2 style="color:white;">
-						<strong>User Sign Up</strong>
+						<strong>${infoLn4}</strong>
 					</h2>
-					<p style="color:white;">It's easy and always will be.</p>
+					<p style="color:white;">${infoLn5}</p>
 				</div>
 			</div>
 			<div class="row">
@@ -25,18 +26,16 @@
 					<div class="row">
 						<div class="col-md-12">
 							<h3 style="color:white;">
-								<strong>Connect yourself and friends to events around
-									you!</strong>
+								<strong> ${infoLnT}</strong>
 							</h3>
 							<p style="color:white;">
-								<span class="glyphicon glyphicon-eye-open"></span> See Upcoming Events and Get
-								Updates
+								<span class="glyphicon glyphicon-eye-open"></span> ${infoLn1}
 							</p >
 							<p style="color:white;">
-								<span class="glyphicon glyphicon-user"></span> Share Events on your profile
+								<span class="glyphicon glyphicon-user"></span> ${infoLn2}
 							</p>
 							<p style="color:white;">
-								<span class="glyphicon glyphicon-list-alt"></span> Beat the Guest list
+								<span class="glyphicon glyphicon-list-alt"></span> ${infoLn3}
 							</p>
 						</div>
 					</div>
@@ -47,27 +46,19 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<input class="form-control" type="text"
-										placeholder="First name">
+										placeholder="${txtFN}">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" type="text" placeholder="Last name">
+									<input class="form-control" type="text" placeholder="${txtLN}">
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
-									<input class="form-control" type="text" placeholder="Email">
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<input class="form-control" type="text"
-										placeholder="Re-Enter email">
+									<input class="form-control" type="text" placeholder="${txtEmail}">
 								</div>
 							</div>
 						</div>
@@ -75,11 +66,19 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<input class="form-control" type="text"
-										placeholder="New Password">
+										placeholder="${txtREmail}">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<input class="form-control" type="text"
+										placeholder="${txtPassword}">
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<button class="btn btn-default" type="button">Sign Up</button>
+										<button class="btn btn-default" type="button"> ${btnSignIn} </button>
 									</div>
 								</div>
 							</div>

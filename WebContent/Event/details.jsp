@@ -4,11 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	if (request.getParameter("ID") == null) {
-		response.sendRedirect("/dan-o/Event/list.jsp");
-	}
-%>
+<% if(request.getSession().getAttribute("name")==null){ response.sendRedirect("/dan-o/User/main.jsp"); }%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -47,7 +43,7 @@
 		</sql:query>
 		<div class="container text-center">
 			<div class="jumbotron hero">
-				<img src="/dan-o/assets/img/city_bg.jpg" class="img-circle"
+				<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" class="img-circle"
 					height="100" width="100" alt="logo">
 				<p style="color: white;">
 					<c:out value="${row.Name}" />
@@ -134,10 +130,10 @@
 														value="${row.User_ID}" />
 												</sql:query>
 												<div class="col-md-1 text-center">
-													<img src="/dan-o/assets/img/city_bg.jpg" class="img-circle"
+													<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" class="img-circle"
 														height="50" width="50" alt="logo">
 													<p>
-														<a href="/dan-o/User/profile.jsp?ID=${row.User_ID}"><c:out
+														<a href="${pageContext.request.contextPath}/User/profile.jsp?ID=${row.User_ID}"><c:out
 																value="${result2.rowsByIndex[0][0]}" /></a>
 													</p>
 												</div>
@@ -160,10 +156,10 @@
 												value="${row.User_ID}" />
 										</sql:query>
 										<div class="col-md-1 text-center">
-											<img src="/dan-o/assets/img/city_bg.jpg" class="img-circle"
+											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" class="img-circle"
 												height="50" width="50" alt="logo">
 											<p>
-												<a href="/dan-o/User/profile.jsp?ID=${row.User_ID}"><c:out
+												<a href="${pageContext.request.contextPath}/User/profile.jsp?ID=${row.User_ID}"><c:out
 														value="${result3.rowsByIndex[0][0]}" /></a>
 											</p>
 

@@ -39,7 +39,7 @@
 
 		<div class="container text-center">
 			<div class="jumbotron hero">
-				<img src="/dan-o/assets/img/city_bg.jpg" class="img-circle"
+				<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" class="img-circle"
 					height="100" width="100" alt="logo">
 				<p style="color: white;">
 					<c:out value="${row.FirstName}" />
@@ -121,11 +121,11 @@
 												value="${result1.rowsByIndex[0][1]}" />
 										</sql:query>
 										<div class="thumbnail col-md-4">
-											<img src="/dan-o/assets/img/city_bg.jpg" alt="...">
+											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" alt="...">
 											<div class="caption">
 												<h3>
 													<a
-														href="/dan-o/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
+														href="${pageContext.request.contextPath}/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
 															value='${result1.rowsByIndex[0][2]}' /></a>
 												</h3>
 												<p>
@@ -162,11 +162,11 @@
 												value="${result1.rowsByIndex[0][1]}" />
 										</sql:query>
 										<div class="thumbnail col-md-4">
-											<img src="/dan-o/assets/img/city_bg.jpg" alt="...">
+											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" alt="...">
 											<div class="caption">
 												<h3>
 													<a
-														href="/dan-o/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
+														href="${pageContext.request.contextPath}/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
 															value='${result1.rowsByIndex[0][2]}' /></a>
 												</h3>
 												<p>
@@ -203,11 +203,11 @@
 												value="${result1.rowsByIndex[0][1]}" />
 										</sql:query>
 										<div class="thumbnail col-md-4">
-											<img src="/dan-o/assets/img/city_bg.jpg" alt="...">
+											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" alt="...">
 											<div class="caption">
 												<h3>
 													<a
-														href="/dan-o/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
+														href="${pageContext.request.contextPath}/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
 															value='${result1.rowsByIndex[0][2]}' /></a>
 												</h3>
 												<p>

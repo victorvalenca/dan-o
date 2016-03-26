@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<% if(request.getSession().getAttribute("name")==null){ response.sendRedirect("/dan-o/User/main.jsp"); }%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,7 +22,7 @@
 	<c:forEach var="row" items="${result.rows}">
 		<div class="container text-center">
 			<div class="jumbotron hero">
-				<img src="/dan-o/assets/img/city_bg.jpg" class="img-circle"
+				<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" class="img-circle"
 					height="100" width="100" alt="logo">
 				<p style="color: white;">
 					<c:out value="${row.Name}" />
@@ -131,10 +132,10 @@
 												value="${row1.ID}" />
 										</sql:query>
 										<div class="thumbnail col-md-4">
-											<img src="/dan-o/assets/img/city_bg.jpg" alt="...">
+											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" alt="...">
 											<div class="caption">
 												<h3>
-													<a href="/dan-o/Event/details.jsp?ID=${row1.ID}"><c:out
+													<a href="${pageContext.request.contextPath}Event/details.jsp?ID=${row1.ID}"><c:out
 															value="${row1.Name}" /></a>
 												</h3>
 												<p>

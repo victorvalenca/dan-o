@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<% if(request.getSession().getAttribute("name")==null){ response.sendRedirect("/dan-o/User/main.jsp"); }%>
 
 <html>
 <head>
@@ -13,7 +14,8 @@
 </head>
 <body>
 
-	<%@ include file="../Shared/blankHeader.jsp"%>
+	<%@ include file="../Shared/authUserHeader.jsp"%>
+	
 	<div class="container">
 		<h2>Event List</h2>
 		<hr>
@@ -78,7 +80,9 @@
 					%>
 
 					<div class="thumbnail col-md-4">
-						<img src="/dan-o/assets/img/city_bg.jpg" alt="...">
+						<img
+							src="${pageContext.request.contextPath}/assets/img/city_bg.jpg"
+							alt="...">
 						<div class="caption">
 							<h3>
 								<a href="details.jsp?ID=${row.ID}"><c:out
@@ -90,7 +94,7 @@
 							</p>
 							<p>
 								Event Date:
-								<fmt:formatDate type="date" dateStyle="long" 
+								<fmt:formatDate type="date" dateStyle="long"
 									value="${row.DateOfEvent}" />
 							</p>
 
@@ -102,10 +106,10 @@
 									value='${countN.rowsByIndex[0][0]}' /></span>
 						</div>
 					</div>
-					</c:forEach>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
-		<%@ include file="../Shared/footer.jsp"%>
+	</div>
+	<%@ include file="../Shared/footer.jsp"%>
 </body>
 </html>
