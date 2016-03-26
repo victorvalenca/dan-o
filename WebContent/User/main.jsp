@@ -1,3 +1,4 @@
+<%@page import="beans.SessionState"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,6 +9,12 @@
 <%@ include file="../Shared/scripts.jsp"%>
 </head>
 <body>
+
+	<%
+		if(request.getSession(false) != null && SessionState.getEmail() != null) 
+			response.sendRedirect("main.jsp"); 
+	%>
+	
 	<%@ include file="../Shared/preAuthUserHeader.jsp"%>
 	<div class="jumbotron hero">
 		<div class="container">
