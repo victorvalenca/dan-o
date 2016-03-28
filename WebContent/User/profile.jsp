@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%
+	if (request.getParameter("ID") == null) {
+		response.sendRedirect("/dan-o/User/main.jsp");
+	}
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,90 +16,226 @@
 <%@ include file="../Shared/scripts.jsp"%>
 </head>
 <body>
+	<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost:3307/myplace_data" user="root"
+		password="Woodpecker99" />
+	<sql:query dataSource="${snapshot}" var="result"> SELECT * from User Where ID = ?; <sql:param
+			value='<%=request.getParameter("ID")%>' />
+	</sql:query>
 	<%@ include file="../Shared/authUserHeader.jsp"%>
-	<div class="container text-center">
-		<div class="jumbotron hero">
-			<img src="/dan-o/assets/img/city_bg.jpg"
-				class="img-circle" height="100" width="100" alt="logo">
-			<p style="color: white;">Account Name</p>
+	<c:forEach var="row" items="${result.rows}">
+		<sql:query dataSource="${snapshot}" var="result1"> SELECT Name from UserPrivilege Where ID = ?; <sql:param
+				value="${row.UserPrivilege_ID}" />
+		</sql:query>
+		<sql:query dataSource="${snapshot}" var="countA"> select count(*) from UserInterest where User_ID = ? And InterestLevel_ID = 2; <sql:param
+				value="${row.ID}" />
+		</sql:query>
+		<sql:query dataSource="${snapshot}" var="countI"> select count(*) from UserInterest where User_ID = ? And InterestLevel_ID = 3; <sql:param
+				value="${row.ID}" />
+		</sql:query>
+		<sql:query dataSource="${snapshot}" var="countAt"> select count(*) from UserInterest where User_ID = ? And InterestLevel_ID = 1; <sql:param
+				value="${row.ID}" />
+		</sql:query>
+
+		<div class="container text-center">
+			<div class="jumbotron hero">
+				<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" class="img-circle"
+					height="100" width="100" alt="logo">
+				<p style="color: white;">
+					<c:out value="${row.FirstName}" />
+					<c:out value="${row.LastName}" />
+				</p>
+			</div>
 		</div>
-	</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-3">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h3 class="panel-title">Information</h3>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">Information</h3>
+										</div>
+										<div class="panel-body">
+											<p>
+												<c:out value="${row.Email}" />
+											</p>
+											<p>
+												<c:out value="${result1.rowsByIndex[0][0]}" />
+												User
+											</p>
+											<a class="btn btn-link btn-xs" role="button" href="#">Edit
+												Information</a> <br /> <a class="btn btn-link btn-xs"
+												role="button" href="#">Change Profile Picture</a> <br /> <a
+												class="btn btn-link btn-xs" role="button" href="#">Change
+												Background Picture</a>
+										</div>
 									</div>
-									<div class="panel-body">
-										<span>User Information</span><a class="btn btn-link btn-xs"
-											role="button" href="#">Edit Information</a><a
-											class="btn btn-link btn-xs" role="button" href="#">Change
-											Profile Picture</a><a class="btn btn-link btn-xs" role="button"
-											href="#">Change Background Picture</a>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">
+												<i class="fa fa-facebook"></i> Facebook
+											</h3>
+										</div>
+										<div class="panel-body">
+											<span>Sign In to Facebook to view Feed</span>
+										</div>
 									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h3 class="panel-title">
-											<i class="fa fa-facebook"></i> Facebook
-										</h3>
-									</div>
-									<div class="panel-body">
-										<span>Sign In to Facebook to view Feed</span>
-									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h3 class="panel-title">
-											<i class="fa fa-twitter"></i> Twitter
-										</h3>
-									</div>
-									<div class="panel-body">
-										<span>Sign In to Twitter to view Feed</span>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">
+												<i class="fa fa-twitter"></i> Twitter
+											</h3>
+										</div>
+										<div class="panel-body">
+											<span>Sign In to Twitter to view Feed</span>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-md-9">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">I'm Attending:</h3>
+				<div class="col-md-9">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										I'm Attending
+										<c:out value='${countA.rowsByIndex[0][0]}' />
+										Event(s):
+									</h3>
+								</div>
+								<div class="panel-body">
+									<sql:query dataSource="${snapshot}" var="result0"> select Event_ID from UserInterest where User_ID = ? And InterestLevel_ID = 2; <sql:param
+											value="${row.ID}" />
+									</sql:query>
+									<c:forEach var="row1" items="${result0.rows}">
+										<sql:query dataSource="${snapshot}" var="result1"> select ID, Organization_ID, Name, DateOfEvent from Event where ID = ?; <sql:param
+												value="${row1.Event_ID}" />
+										</sql:query>
+										<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
+												value="${result1.rowsByIndex[0][1]}" />
+										</sql:query>
+										<div class="thumbnail col-md-4">
+											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" alt="...">
+											<div class="caption">
+												<h3>
+													<a
+														href="${pageContext.request.contextPath}/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
+															value='${result1.rowsByIndex[0][2]}' /></a>
+												</h3>
+												<p>
+													Hosted By:
+													<c:out value='${result2.rowsByIndex[0][0]}' />
+												</p>
+												<p>
+													Event Date:
+													<fmt:formatDate type="date" dateStyle="long"
+														value="${result1.rowsByIndex[0][3]}" />
+												</p>
+											</div>
+										</div>
+									</c:forEach>
+								</div>
 							</div>
-							<div class="panel-body">
-								<span>Attending Event Panels</span>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										I'm Interested in
+										<c:out value='${countI.rowsByIndex[0][0]}' />
+										Event(s):
+									</h3>
+								</div>
+								<div class="panel-body">
+									<sql:query dataSource="${snapshot}" var="result0"> select Event_ID from UserInterest where User_ID = ? And InterestLevel_ID = 3; <sql:param
+											value="${row.ID}" />
+									</sql:query>
+									<c:forEach var="row1" items="${result0.rows}">
+										<sql:query dataSource="${snapshot}" var="result1"> select ID, Organization_ID, Name, DateOfEvent from Event where ID = ?; <sql:param
+												value="${row1.Event_ID}" />
+										</sql:query>
+										<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
+												value="${result1.rowsByIndex[0][1]}" />
+										</sql:query>
+										<div class="thumbnail col-md-4">
+											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" alt="...">
+											<div class="caption">
+												<h3>
+													<a
+														href="${pageContext.request.contextPath}/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
+															value='${result1.rowsByIndex[0][2]}' /></a>
+												</h3>
+												<p>
+													Hosted By:
+													<c:out value='${result2.rowsByIndex[0][0]}' />
+												</p>
+												<p>
+													Event Date:
+													<fmt:formatDate type="date" dateStyle="long"
+														value="${result1.rowsByIndex[0][3]}" />
+												</p>
+											</div>
+										</div>
+									</c:forEach>
+								</div>
 							</div>
-						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">I'm Interested in:</h3>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										I've Attended
+										<c:out value="${countAt.rowsByIndex[0][0]}" />
+										Event(s):
+									</h3>
+								</div>
+								<div class="panel-body">
+									<sql:query dataSource="${snapshot}" var="result0"> select Event_ID from UserInterest where User_ID = ? And InterestLevel_ID = 1; <sql:param
+											value="${row.ID}" />
+									</sql:query>
+									<c:forEach var="row2" items="${result0.rows}">
+										<sql:query dataSource="${snapshot}" var="result1"> select ID, Organization_ID, Name, DateOfEvent from Event where ID = ?; <sql:param
+												value="${row2.Event_ID}" />
+										</sql:query>
+										<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
+												value="${result1.rowsByIndex[0][1]}" />
+										</sql:query>
+										<div class="thumbnail col-md-4">
+											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" alt="...">
+											<div class="caption">
+												<h3>
+													<a
+														href="${pageContext.request.contextPath}/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
+															value='${result1.rowsByIndex[0][2]}' /></a>
+												</h3>
+												<p>
+													Hosted By:
+													<c:out value='${result2.rowsByIndex[0][0]}' />
+												</p>
+												<p>
+													Event Date:
+													<fmt:formatDate type="date" dateStyle="long"
+														value="${result1.rowsByIndex[0][3]}" />
+												</p>
+											</div>
+										</div>
+									</c:forEach>
+								</div>
 							</div>
-							<div class="panel-body">
-								<span>Interested Event Panels</span>
-							</div>
-						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">Event Review</h3>
-							</div>
-							<div class="panel-body">
-								<span>Event Review Panels</span>
-							</div>
+							<!--  <div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">Event Review</h3>
+								</div>
+								<div class="panel-body"></div>
+							</div> -->
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</c:forEach>
 	<%@ include file="../Shared/footer.jsp"%>
 </body>
 </html>

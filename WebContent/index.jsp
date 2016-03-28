@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<% if(request.getSession().getAttribute("name")!=null){ response.sendRedirect("/dan-o/User/profile.jsp?ID="+request.getSession().getAttribute("UserID")); }%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,15 +22,11 @@
 					<h1 class="text-center">My pLace Entertainment</h1>
 					<p class="text-center">Welcome to My pLace Entertainment! How
 						can we help you?</p>
-					<p class="text-center">
-						<a class="btn btn-primary btn-lg" role="button"
-							href="/dan-o/User/main.jsp">I am a User <i
-							class="glyphicon glyphicon-chevron-right"></i>
-						</a><a class="btn btn-success btn-lg" role="button"
-							href="/dan-o/Organization/main.jsp">I am an
-							Organization <i class="glyphicon glyphicon-chevron-right"></i>
-						</a>
-					</p>
+					<form action="localeServlet" method="post" class="form-inline text-center">
+						<input type="submit" name="submit" value="English"
+							class="btn btn-primary btn-lg" /> <input type="submit"
+							name="submit" value="Francais" class="btn btn-success btn-lg" />
+					</form>
 				</div>
 			</div>
 		</div>
