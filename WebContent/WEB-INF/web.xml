@@ -12,6 +12,30 @@
 		<url-pattern>/loginServlet</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>about</servlet-name>
+		<servlet-class>com.myplace.servlets.AboutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>about</servlet-name>
+		<url-pattern>/aboutServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>event</servlet-name>
+		<servlet-class>com.myplace.servlets.EventServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>event</servlet-name>
+		<url-pattern>/eventServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>eventd</servlet-name>
+		<servlet-class>com.myplace.servlets.EventDetailsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>eventd</servlet-name>
+		<url-pattern>/eventDetailsServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>logout</servlet-name>
 		<servlet-class>com.myplace.servlets.LogoutServlet</servlet-class>
 	</servlet>
@@ -23,12 +47,43 @@
 		<servlet-name>locale</servlet-name>
 		<servlet-class>com.myplace.servlets.LocaleServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>locale</servlet-name>
 		<url-pattern>/localeServlet</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>uProfile</servlet-name>
+		<servlet-class>com.myplace.servlets.UserProfileServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>uProfile</servlet-name>
+		<url-pattern>/userProfileServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>oMain</servlet-name>
+		<servlet-class>com.myplace.servlets.OrgMainServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>oMain</servlet-name>
+		<url-pattern>/orgMainServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>oProfile</servlet-name>
+		<servlet-class>com.myplace.servlets.OrgProfileServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>oProfile</servlet-name>
+		<url-pattern>/orgProfileServlet</url-pattern>
+	</servlet-mapping>
+		<servlet>
+		<servlet-name>account</servlet-name>
+		<servlet-class>com.myplace.servlets.AccountServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>account</servlet-name>
+		<url-pattern>/accountServlet</url-pattern>
+	</servlet-mapping>
+	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

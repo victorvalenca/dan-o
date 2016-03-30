@@ -39,8 +39,8 @@
 
 		<div class="container text-center">
 			<div class="jumbotron hero">
-				<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" class="img-circle"
-					height="100" width="100" alt="logo">
+				<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg"
+					class="img-circle" height="100" width="100" alt="logo">
 				<p style="color: white;">
 					<c:out value="${row.FirstName}" />
 					<c:out value="${row.LastName}" />
@@ -56,7 +56,7 @@
 								<div class="col-md-12">
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h3 class="panel-title">Information</h3>
+											<h3 class="panel-title">${information}</h3>
 										</div>
 										<div class="panel-body">
 											<p>
@@ -66,11 +66,9 @@
 												<c:out value="${result1.rowsByIndex[0][0]}" />
 												User
 											</p>
-											<a class="btn btn-link btn-xs" role="button" href="#">Edit
-												Information</a> <br /> <a class="btn btn-link btn-xs"
-												role="button" href="#">Change Profile Picture</a> <br /> <a
-												class="btn btn-link btn-xs" role="button" href="#">Change
-												Background Picture</a>
+											<a class="btn btn-link btn-xs" role="button" href="#">${einformation}</a>
+											<br /> <a class="btn btn-link btn-xs" role="button" href="#">${proPic}</a>
+											<br /> <a class="btn btn-link btn-xs" role="button" href="#">${bacPic}</a>
 										</div>
 									</div>
 									<div class="panel panel-default">
@@ -80,7 +78,7 @@
 											</h3>
 										</div>
 										<div class="panel-body">
-											<span>Sign In to Facebook to view Feed</span>
+											<span>${facebook}</span>
 										</div>
 									</div>
 									<div class="panel panel-default">
@@ -90,7 +88,7 @@
 											</h3>
 										</div>
 										<div class="panel-body">
-											<span>Sign In to Twitter to view Feed</span>
+											<span>${twitter}</span>
 										</div>
 									</div>
 								</div>
@@ -104,132 +102,143 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="panel-title">
-										I'm Attending
+										${attending}
 										<c:out value='${countA.rowsByIndex[0][0]}' />
-										Event(s):
+										${event}(s):
 									</h3>
 								</div>
 								<div class="panel-body">
 									<sql:query dataSource="${snapshot}" var="result0"> select Event_ID from UserInterest where User_ID = ? And InterestLevel_ID = 2; <sql:param
 											value="${row.ID}" />
 									</sql:query>
-									<c:forEach var="row1" items="${result0.rows}">
-										<sql:query dataSource="${snapshot}" var="result1"> select ID, Organization_ID, Name, DateOfEvent from Event where ID = ?; <sql:param
-												value="${row1.Event_ID}" />
-										</sql:query>
-										<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
-												value="${result1.rowsByIndex[0][1]}" />
-										</sql:query>
-										<div class="thumbnail col-md-4">
-											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" alt="...">
-											<div class="caption">
-												<h3>
-													<a
-														href="${pageContext.request.contextPath}/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
-															value='${result1.rowsByIndex[0][2]}' /></a>
-												</h3>
-												<p>
-													Hosted By:
-													<c:out value='${result2.rowsByIndex[0][0]}' />
-												</p>
-												<p>
-													Event Date:
-													<fmt:formatDate type="date" dateStyle="long"
-														value="${result1.rowsByIndex[0][3]}" />
-												</p>
+									<form
+										action="${pageContext.request.contextPath}/eventDetailsServlet">
+										<c:forEach var="row1" items="${result0.rows}">
+											<sql:query dataSource="${snapshot}" var="result1"> select ID, Organization_ID, Name, DateOfEvent from Event where ID = ?; <sql:param
+													value="${row1.Event_ID}" />
+											</sql:query>
+											<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
+													value="${result1.rowsByIndex[0][1]}" />
+											</sql:query>
+											<div class="thumbnail col-md-4">
+												<img
+													src="${pageContext.request.contextPath}/assets/img/city_bg.jpg"
+													alt="...">
+												<div class="caption">
+													<h3>
+														<input class="btn btn-link" type="submit"
+															value="${result1.rowsByIndex[0][2]}" /> <input
+															type="hidden" name="param_no"
+															value="${result1.rowsByIndex[0][0]}" />
+													</h3>
+													<p>
+														${hosted} :
+														<c:out value='${result2.rowsByIndex[0][0]}' />
+													</p>
+													<p>
+														${date}:
+														<fmt:formatDate type="date" dateStyle="long"
+															value="${result1.rowsByIndex[0][3]}" />
+													</p>
+												</div>
 											</div>
-										</div>
-									</c:forEach>
+										</c:forEach>
+									</form>
 								</div>
 							</div>
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="panel-title">
-										I'm Interested in
+										${interested}
 										<c:out value='${countI.rowsByIndex[0][0]}' />
-										Event(s):
+										${event}(s):
 									</h3>
 								</div>
 								<div class="panel-body">
 									<sql:query dataSource="${snapshot}" var="result0"> select Event_ID from UserInterest where User_ID = ? And InterestLevel_ID = 3; <sql:param
 											value="${row.ID}" />
 									</sql:query>
-									<c:forEach var="row1" items="${result0.rows}">
-										<sql:query dataSource="${snapshot}" var="result1"> select ID, Organization_ID, Name, DateOfEvent from Event where ID = ?; <sql:param
-												value="${row1.Event_ID}" />
-										</sql:query>
-										<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
-												value="${result1.rowsByIndex[0][1]}" />
-										</sql:query>
-										<div class="thumbnail col-md-4">
-											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" alt="...">
-											<div class="caption">
-												<h3>
-													<a
-														href="${pageContext.request.contextPath}/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
-															value='${result1.rowsByIndex[0][2]}' /></a>
-												</h3>
-												<p>
-													Hosted By:
-													<c:out value='${result2.rowsByIndex[0][0]}' />
-												</p>
-												<p>
-													Event Date:
-													<fmt:formatDate type="date" dateStyle="long"
-														value="${result1.rowsByIndex[0][3]}" />
-												</p>
+									<form
+										action="${pageContext.request.contextPath}/eventDetailsServlet">
+										<c:forEach var="row1" items="${result0.rows}">
+											<sql:query dataSource="${snapshot}" var="result1"> select ID, Organization_ID, Name, DateOfEvent from Event where ID = ?; <sql:param
+													value="${row1.Event_ID}" />
+											</sql:query>
+											<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
+													value="${result1.rowsByIndex[0][1]}" />
+											</sql:query>
+											<div class="thumbnail col-md-4">
+												<img
+													src="${pageContext.request.contextPath}/assets/img/city_bg.jpg"
+													alt="...">
+												<div class="caption">
+													<h3>
+														<input class="btn btn-link" type="submit"
+															value="${result1.rowsByIndex[0][2]}" /> <input
+															type="hidden" name="param_no"
+															value="${result1.rowsByIndex[0][0]}" />
+													</h3>
+													<p>
+														${hosted}:
+														<c:out value='${result2.rowsByIndex[0][0]}' />
+													</p>
+													<p>
+														${date}:
+														<fmt:formatDate type="date" dateStyle="long"
+															value="${result1.rowsByIndex[0][3]}" />
+													</p>
+												</div>
 											</div>
-										</div>
-									</c:forEach>
+										</c:forEach>
+									</form>
 								</div>
 							</div>
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="panel-title">
-										I've Attended
+										${attended}
 										<c:out value="${countAt.rowsByIndex[0][0]}" />
-										Event(s):
+										${event}(s):
 									</h3>
 								</div>
 								<div class="panel-body">
 									<sql:query dataSource="${snapshot}" var="result0"> select Event_ID from UserInterest where User_ID = ? And InterestLevel_ID = 1; <sql:param
 											value="${row.ID}" />
 									</sql:query>
-									<c:forEach var="row2" items="${result0.rows}">
-										<sql:query dataSource="${snapshot}" var="result1"> select ID, Organization_ID, Name, DateOfEvent from Event where ID = ?; <sql:param
-												value="${row2.Event_ID}" />
-										</sql:query>
-										<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
-												value="${result1.rowsByIndex[0][1]}" />
-										</sql:query>
-										<div class="thumbnail col-md-4">
-											<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" alt="...">
-											<div class="caption">
-												<h3>
-													<a
-														href="${pageContext.request.contextPath}/Event/details.jsp?ID=${result1.rowsByIndex[0][0]}"><c:out
-															value='${result1.rowsByIndex[0][2]}' /></a>
-												</h3>
-												<p>
-													Hosted By:
-													<c:out value='${result2.rowsByIndex[0][0]}' />
-												</p>
-												<p>
-													Event Date:
-													<fmt:formatDate type="date" dateStyle="long"
-														value="${result1.rowsByIndex[0][3]}" />
-												</p>
+									<form
+										action="${pageContext.request.contextPath}/eventDetailsServlet">
+										<c:forEach var="row2" items="${result0.rows}">
+											<sql:query dataSource="${snapshot}" var="result1"> select ID, Organization_ID, Name, DateOfEvent from Event where ID = ?; <sql:param
+													value="${row2.Event_ID}" />
+											</sql:query>
+											<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
+													value="${result1.rowsByIndex[0][1]}" />
+											</sql:query>
+											<div class="thumbnail col-md-4">
+												<img
+													src="${pageContext.request.contextPath}/assets/img/city_bg.jpg"
+													alt="...">
+												<div class="caption">
+													<h3>
+														<input class="btn btn-link" type="submit"
+															value="${result1.rowsByIndex[0][2]}" /> <input type="hidden"
+															name="param_no" value="${result1.rowsByIndex[0][0]}" />
+													</h3>
+													<p>
+														${hosted}:
+														<c:out value='${result2.rowsByIndex[0][0]}' />
+													</p>
+													<p>
+														${date}:
+														<fmt:formatDate type="date" dateStyle="long"
+															value="${result1.rowsByIndex[0][3]}" />
+													</p>
+												</div>
 											</div>
-										</div>
-									</c:forEach>
+										</c:forEach>
+									</form>
 								</div>
 							</div>
-							<!--  <div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title">Event Review</h3>
-								</div>
-								<div class="panel-body"></div>
-							</div> -->
 						</div>
 					</div>
 				</div>
