@@ -15,6 +15,9 @@ import com.myplace.dao.LoginDao;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {}
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int ID;
 		response.setContentType("text/html");
@@ -31,11 +34,11 @@ public class LoginServlet extends HttpServlet {
 		if (LoginDao.validate(n, p)) {
 			ID = LoginDao.getID(n);
 			session.setAttribute("UserID", ID);
-			RequestDispatcher rd = request.getRequestDispatcher("User/profile.jsp?ID="+ID);
+			RequestDispatcher rd = request.getRequestDispatcher("/userProfileServlet");
 			rd.forward(request, response);
 		} else {
 			out.print("<p style=\"color:red\">Sorry email or password error</p>");
-			RequestDispatcher rd = request.getRequestDispatcher("User/main.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/localeServlet");
 			rd.include(request, response);
 		}
 

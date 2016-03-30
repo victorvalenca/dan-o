@@ -34,16 +34,13 @@
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-md-5">
-							<h3 class="panel-title">Organization Information</h3>
+							<h3 class="panel-title">${information}</h3>
 						</div>
 						<div class="col-md-7">
 							<div class="btn-group" role="group">
-								<button class="btn btn-default btn-xs" type="button">Edit
-									Information</button>
-								<button class="btn btn-default btn-xs" type="button">Change
-									Profile Picture</button>
-								<button class="btn btn-default btn-xs" type="button">Change
-									Background Picture</button>
+								<button class="btn btn-default btn-xs" type="button">${einformation}</button>
+								<button class="btn btn-default btn-xs" type="button">${procPic}</button>
+								<button class="btn btn-default btn-xs" type="button">${bacPic}</button>
 							</div>
 						</div>
 					</div>
@@ -83,7 +80,7 @@
 											</h3>
 										</div>
 										<div class="panel-body">
-											<span>Sign In to Facebook to view Feed</span>
+											<span>${facebook}</span>
 										</div>
 									</div>
 									<div class="panel panel-default">
@@ -93,7 +90,7 @@
 											</h3>
 										</div>
 										<div class="panel-body">
-											<span>Sign In to Twitter to view Feed</span>
+											<span>${twitter}</span>
 										</div>
 									</div>
 								</div>
@@ -108,11 +105,10 @@
 								<div class="panel-heading">
 									<div class="row">
 										<div class="col-md-10">
-											<h3 class="panel-title">Our Events</h3>
+											<h3 class="panel-title">${event}</h3>
 										</div>
 										<div class="col-md-2">
-											<button class="btn btn-success btn-xs" type="button">Create
-												Event</button>
+											<button class="btn btn-success btn-xs" type="button">${crevent}</button>
 										</div>
 									</div>
 								</div>
@@ -139,20 +135,20 @@
 															value="${row1.Name}" /></a>
 												</h3>
 												<p>
-													Hosted By:
+													${hosted}:
 													<c:out value='${row.Name}' />
 												</p>
 												<p>
-													Event Date:
+													${date}:
 													<fmt:formatDate type="date" dateStyle="long"
 														value="${row1.DateOfEvent}" />
 												</p>
 
-												<span class="label label-success">Going: <c:out
+												<span class="label label-success">${going}: <c:out
 														value='${countA.rowsByIndex[0][0]}' /></span> <span
-													class="label label-info">Interested: <c:out
+													class="label label-info">${interested}: <c:out
 														value='${countI.rowsByIndex[0][0]}' /></span> <span
-													class="label label-danger">Not Going: <c:out
+													class="label label-danger">${ngoing}: <c:out
 														value='${countN.rowsByIndex[0][0]}' /></span>
 											</div>
 										</div>

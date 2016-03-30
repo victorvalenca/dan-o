@@ -4,7 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<% if(request.getSession().getAttribute("name")==null){ response.sendRedirect("/dan-o/User/main.jsp"); }%>
+<%
+	if (request.getSession().getAttribute("name") == null) {
+		response.sendRedirect("/dan-o/User/main.jsp");
+	}
+%>
 
 <html>
 <head>
@@ -15,29 +19,29 @@
 <body>
 
 	<%@ include file="../Shared/authUserHeader.jsp"%>
-	
+
 	<div class="container">
-		<h2>Event List</h2>
+		<h2>${title}</h2>
 		<hr>
 		<div class="row">
 			<div class="col-md-3">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Commands:</h3>
+						<h3 class="panel-title">${commands}:</h3>
 					</div>
 					<div class="panel-body">
 						<form action="searchServlet" method="post">
-							<p>Page Size</p>
+							<p>${pagesz}</p>
 							<div class="form-group">
 								<input type="radio" name="searchType" value="title">
-								Title<br> <input type="radio" name="searchType"
-									value="notes"> Notes
+								${lblTitle}<br> <input type="radio" name="searchType"
+									value="notes"> ${lblNotes}
 							</div>
 							<div class="form-group">
-								<input class="form-control" type="text" placeholder="Search">
+								<input class="form-control" type="text" placeholder="${search}">
 							</div>
 							<div class="form-group">
-								<button class="btn btn-default" type="submit" value="Search">Search</button>
+								<button class="btn btn-default" type="submit" value="Search">${search}</button>
 							</div>
 						</form>
 					</div>
@@ -79,37 +83,43 @@
 							ctr++;
 					%>
 
-					<div class="thumbnail col-md-4">
-						<img
-							src="${pageContext.request.contextPath}/assets/img/city_bg.jpg"
-							alt="...">
-						<div class="caption">
-							<h3>
-								<a href="details.jsp?ID=${row.ID}"><c:out
-										value="${row.Name}" /></a>
-							</h3>
-							<p>
-								Hosted By:
-								<c:out value='${result1.rowsByIndex[0][0]}' />
-							</p>
-							<p>
-								Event Date:
-								<fmt:formatDate type="date" dateStyle="long"
-									value="${row.DateOfEvent}" />
-							</p>
+					<form
+						action="${pageContext.request.contextPath}/eventDetailsServlet">
 
-							<span class="label label-success">Going: <c:out
-									value='${countA.rowsByIndex[0][0]}' /></span> <span
-								class="label label-info">Interested: <c:out
-									value='${countI.rowsByIndex[0][0]}' /></span> <span
-								class="label label-danger">Not Going: <c:out
-									value='${countN.rowsByIndex[0][0]}' /></span>
+
+						<div class="thumbnail col-md-4">
+							<img
+								src="${pageContext.request.contextPath}/assets/img/city_bg.jpg"
+								alt="...">
+							<div class="caption">
+								<h3>
+									<input class="btn btn-link" type="submit" value="${row.Name}" />
+									<input type="hidden" name="param_no" value="${row.ID}" />
+
+								</h3>
+								<p>
+									${hosted}:
+									<c:out value='${result1.rowsByIndex[0][0]}' />
+								</p>
+								<p>
+									${date}:
+									<fmt:formatDate type="date" dateStyle="long"
+										value="${row.DateOfEvent}" />
+								</p>
+
+								<span class="label label-success">${going}: <c:out
+										value='${countA.rowsByIndex[0][0]}' /></span> <span
+									class="label label-info">${interested}: <c:out
+										value='${countI.rowsByIndex[0][0]}' /></span> <span
+									class="label label-danger">${ngoing}: <c:out
+										value='${countN.rowsByIndex[0][0]}' /></span>
+							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</form>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
-	</div>
-	<%@ include file="../Shared/footer.jsp"%>
+		<%@ include file="../Shared/footer.jsp"%>
 </body>
 </html>
