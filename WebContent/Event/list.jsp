@@ -4,7 +4,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<% if(request.getSession().getAttribute("name")==null){ response.sendRedirect("/dan-o/User/main.jsp"); }%>
+<%@ page import="java.sql.PreparedStatement"  %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="java.util.logging.Level" %>
+<%@ page import="java.util.logging.Logger" %>
+
+<%
+	if (request.getSession().getAttribute("name") == null) response.sendRedirect("/dan-o/User/main.jsp");
+%>
 
 <html>
 <head>
@@ -13,31 +24,29 @@
 <%@ include file="../Shared/scripts.jsp"%>
 </head>
 <body>
-
 	<%@ include file="../Shared/authUserHeader.jsp"%>
-	
 	<div class="container">
-		<h2>Event List</h2>
+		<h2>${title}</h2>
 		<hr>
 		<div class="row">
 			<div class="col-md-3">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Commands:</h3>
+						<h3 class="panel-title">${commands}:</h3>
 					</div>
 					<div class="panel-body">
 						<form action="searchServlet" method="post">
-							<p>Page Size</p>
+							<p>${pagesz}</p>
 							<div class="form-group">
 								<input type="radio" name="searchType" value="title">
-								Title<br> <input type="radio" name="searchType"
-									value="notes"> Notes
+								${lblTitle}<br> <input type="radio" name="searchType"
+									value="notes"> ${lblNotes}
 							</div>
 							<div class="form-group">
-								<input class="form-control" type="text" placeholder="Search">
+								<input class="form-control" type="text" placeholder="${search}">
 							</div>
 							<div class="form-group">
-								<button class="btn btn-default" type="submit" value="Search">Search</button>
+								<button class="btn btn-default" type="submit" value="Search">${search}</button>
 							</div>
 						</form>
 					</div>
@@ -47,9 +56,21 @@
 				<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
 					url="jdbc:mysql://localhost:3307/myplace_data" user="root"
 					password="Woodpecker99" />
+					
+					<%
+						// page number in zero-starting value
+						int pageNum = 0;
+					
+						// retrieve page parameter from URL, if exists
+						String pageNumString = request.getParameter("page");
+						if(pageNumString != null) pageNum = Integer.parseInt(pageNumString) - 1;	
+						
+						// minimum and maximum values for page indexing
+					 	int indexMin = (pageNum * 9) + 1;
+						int indexMax = indexMin + 8;
+					%>
 
-				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event; </sql:query>
-
+				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event where ID >= <%=indexMin%> and ID <= <%=indexMax%>; </sql:query>
 				<div class="row">
 					<%
 						int ctr = 0;
@@ -79,37 +100,138 @@
 							ctr++;
 					%>
 
-					<div class="thumbnail col-md-4">
-						<img
-							src="${pageContext.request.contextPath}/assets/img/city_bg.jpg"
-							alt="...">
-						<div class="caption">
-							<h3>
-								<a href="details.jsp?ID=${row.ID}"><c:out
-										value="${row.Name}" /></a>
-							</h3>
-							<p>
-								Hosted By:
-								<c:out value='${result1.rowsByIndex[0][0]}' />
-							</p>
-							<p>
-								Event Date:
-								<fmt:formatDate type="date" dateStyle="long"
-									value="${row.DateOfEvent}" />
-							</p>
+					<form
+						action="${pageContext.request.contextPath}/eventDetailsServlet">
 
-							<span class="label label-success">Going: <c:out
-									value='${countA.rowsByIndex[0][0]}' /></span> <span
-								class="label label-info">Interested: <c:out
-									value='${countI.rowsByIndex[0][0]}' /></span> <span
-								class="label label-danger">Not Going: <c:out
-									value='${countN.rowsByIndex[0][0]}' /></span>
+
+						<div class="thumbnail col-md-4">
+							<img
+								src="${pageContext.request.contextPath}/assets/img/city_bg.jpg"
+								alt="...">
+							<div class="caption">
+								<h3>
+									<input class="btn btn-link" type="submit" value="${row.Name}" />
+									<input type="hidden" name="param_no" value="${row.ID}" />
+
+								</h3>
+								<p>
+									${hosted}:
+									<c:out value='${result1.rowsByIndex[0][0]}' />
+								</p>
+								<p>
+									${date}:
+									<fmt:formatDate type="date" dateStyle="long"
+										value="${row.DateOfEvent}" />
+								</p>
+
+								<span class="label label-success">${going}: <c:out
+										value='${countA.rowsByIndex[0][0]}' /></span> <span
+									class="label label-info">${interested}: <c:out
+										value='${countI.rowsByIndex[0][0]}' /></span> <span
+									class="label label-danger">${ngoing}: <c:out
+										value='${countN.rowsByIndex[0][0]}' /></span>
+							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</form>
+					</c:forEach>
+				</div>
+				
+			  <ul class="pagination pagination-lg">
+			     <%
+			     	// SQL  prerequisite
+			        Connection con = null;
+			     	Statement  st = null;
+			        ResultSet rs = null;
+			    
+			        // total number of entries in SQL tble
+			      	int listItems = 0;
+			      	
+			      	// request the number of values from database
+			      	try {
+						//SQL parameters
+				      	String sqlStat = "SELECT count(*) from Event";
+				     	String url = "jdbc:mysql://localhost:3307/myplace_data";
+				        String user = "root";
+				        String password = "Woodpecker99";
+				        
+				        // attempt to establish connection
+			      		con = DriverManager.getConnection(url, user, password);
+			      		st = con.createStatement();
+			      		rs = st.executeQuery(sqlStat);
+
+			      		// retrieve value
+			            if (rs.next()) {
+			                listItems = Integer.parseInt(rs.getString(1));
+			            }
+
+			        }
+			      	catch (Exception e) {}
+			      	finally {
+			      		// closure of SQL connection
+			            try {
+			                if (rs != null) {
+			                    rs.close();
+			                }
+			                if (st != null) {
+			                    st.close();
+			                }
+			                if (con != null) {
+			                    con.close();
+			                }
+
+			            } 
+			            catch (SQLException se) {}
+			        }
+			      	// the page limit of the pagination menu
+			      	int totalList = listItems / 9;
+			      	// add an extra page for potential leftovers
+			      	if (listItems %9 != 0) totalList++;
+			      	
+			     	// page check to verify if goto first makes sense
+			      	if(pageNum == 0) 
+			      	{
+			      		%> <li class="disabled"><span>&laquo;</span></li> <%
+			      	}
+			      	else
+			      	{
+			      		%> <li><a href="list.jsp?page=1">&laquo;</a></li> <%
+			      	}
+			      	
+			     	// list of five, numbers below zero are skipped and stops before limit, if necessary
+			      	for (int i = pageNum - 2, j = 0; i < totalList && j < 5; i++, j++)
+			      	{
+			      		if(i < 0)
+			      		{
+			      			continue;
+			      		}
+			      		// find active button by association of middle button
+			      		else if(j != 2)
+			      		{ 
+					      %>
+					      	<li><a href="list.jsp?page=<%=i+1%>"><%=i+1%></a></li>
+					      <%
+			      		}
+			      		else
+			      		{
+						  %>
+						    <li class="active"><a href="#"><%=i+1%></a></li>
+						  <%
+			      		}
+			      	}
+			      	
+			      	// page check to verify if goto last makes sense
+			      	if(pageNum == (totalList - 1)) 
+			      	{
+			      		%> <li class="disabled"><span>&raquo;</span></li> <%
+			      	}
+			      	else
+			      	{
+			      		%> <li><a href="list.jsp?page=<%=totalList%>">&raquo;</a></li> <%
+			      	}
+			      %>
+			  </ul>
 			</div>
 		</div>
-	</div>
-	<%@ include file="../Shared/footer.jsp"%>
+		<%@ include file="../Shared/footer.jsp"%>
 </body>
 </html>
