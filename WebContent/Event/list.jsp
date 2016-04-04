@@ -63,11 +63,12 @@
 						int pageNum = pageNumString != null ? Integer.parseInt(pageNumString) - 1 : 0;	
 						
 						// minimum and maximum values for page indexing
-					 	int indexMin = (pageNum * 9)++;
-						int indexMax = indexMin + 8;
+					 	int indexMin = pageNum * 9;
+						indexMin++;
+						int indexMax = indexMin + 9;
 					%>
 
-				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event where ID >= <%=indexMin%> and ID <= <%=indexMax%>; </sql:query>
+				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event where ID >= <%=indexMin%> and ID < <%=indexMax%>; </sql:query>
 				<div class="row">
 					<%
 						int ctr = 0;
@@ -135,34 +136,41 @@
 				
 			  <ul class="pagination pagination-lg">
 			     <%
+			     	//SQL prerequesites
+			     	Connection cn = null;
+			     	Statement st = null;
+			     	ResultSet rs = null;
+			     
 			        // total number of entries in SQL tble
 			      	int listItems = 0;
 			      	
 			      	// request the number of values from database
 			      	try {
-					//SQL parameters
+						//SQL parameters
 				      	String sqlStat = "SELECT count(*) from Event";
 				     	String url = "jdbc:mysql://localhost:3307/myplace_data";
 				        String user = "root";
 				        String password = "Woodpecker99";
 				        
 				        // attempt to establish connection
-			      		Connection con = DriverManager.getConnection(url, user, password);
-			      		Statement st = con.createStatement();
-			      		ResultSet rs = st.executeQuery(sqlStat);
+			      		cn = DriverManager.getConnection(url, user, password);
+			      		st = cn.createStatement();
+			      		rs = st.executeQuery(sqlStat);
 
 			      		// retrieve value
-			                listItems = rs.next() ? Integer.parseInt(rs.getString(1)) : 0;
+			            listItems = rs.next() ? Integer.parseInt(rs.getString(1)) : 0;
 			                
-			      	        // closure of SQL connection
-			                try {
-			                    if (rs != null) rs.close();
-			                    if (st != null)  st.close();
-			                    if (con != null) con.close();
-			            	} 
-			            	catch (SQLException se) {}
 			        }
 			      	catch (Exception e) {}
+			      	finally {
+		      	        // closure of SQL connection
+		                try {
+		                    if (rs != null) rs.close();
+		                    if (st != null)  st.close();
+		                    if (cn != null) cn.close();
+		            	} 
+		            	catch (SQLException se) {}
+			      	}
 			      	
 			      	// the page limit of the pagination menu
 			      	int totalList = listItems / 9;
@@ -193,7 +201,7 @@
 			      		}
 			      		else {
 					      %>
-						<li class="active"><span><%=i+1%></span></li>
+							<li class="active"><span><%=i+1%></span></li>
 					      <%
 			      		}
 			      	}
