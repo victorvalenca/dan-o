@@ -58,19 +58,17 @@
 					password="Woodpecker99" />
 					
 					<%
-						// page number in zero-starting value
-						int pageNum = 0;
-					
-						// retrieve page parameter from URL, if exists
+						// retrieve page parameter from URL, if exists; page number is in zero-starting value
 						String pageNumString = request.getParameter("page");
-						if(pageNumString != null) pageNum = Integer.parseInt(pageNumString) - 1;	
+						int pageNum = pageNumString != null ? Integer.parseInt(pageNumString) - 1 : 0;	
 						
 						// minimum and maximum values for page indexing
-					 	int indexMin = (pageNum * 9) + 1;
-						int indexMax = indexMin + 8;
+					 	int indexMin = pageNum * 9;
+						indexMin++;
+						int indexMax = indexMin + 9;
 					%>
 
-				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event where ID >= <%=indexMin%> and ID <= <%=indexMax%>; </sql:query>
+				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event where ID >= <%=indexMin%> and ID < <%=indexMax%>; </sql:query>
 				<div class="row">
 					<%
 						int ctr = 0;
@@ -138,11 +136,11 @@
 				
 			  <ul class="pagination pagination-lg">
 			     <%
-			     	// SQL  prerequisite
-			        Connection con = null;
-			     	Statement  st = null;
-			        ResultSet rs = null;
-			    
+			     	//SQL prerequesites
+			     	Connection cn = null;
+			     	Statement st = null;
+			     	ResultSet rs = null;
+			     
 			        // total number of entries in SQL tble
 			      	int listItems = 0;
 			      	
@@ -155,78 +153,67 @@
 				        String password = "Woodpecker99";
 				        
 				        // attempt to establish connection
-			      		con = DriverManager.getConnection(url, user, password);
-			      		st = con.createStatement();
+			      		cn = DriverManager.getConnection(url, user, password);
+			      		st = cn.createStatement();
 			      		rs = st.executeQuery(sqlStat);
 
 			      		// retrieve value
-			            if (rs.next()) {
-			                listItems = Integer.parseInt(rs.getString(1));
-			            }
-
+			            listItems = rs.next() ? Integer.parseInt(rs.getString(1)) : 0;
+			                
 			        }
 			      	catch (Exception e) {}
 			      	finally {
-			      		// closure of SQL connection
-			            try {
-			                if (rs != null) {
-			                    rs.close();
-			                }
-			                if (st != null) {
-			                    st.close();
-			                }
-			                if (con != null) {
-			                    con.close();
-			                }
-
-			            } 
-			            catch (SQLException se) {}
-			        }
+		      	        // closure of SQL connection
+		                try {
+		                    if (rs != null) rs.close();
+		                    if (st != null)  st.close();
+		                    if (cn != null) cn.close();
+		            	} 
+		            	catch (SQLException se) {}
+			      	}
+			      	
 			      	// the page limit of the pagination menu
 			      	int totalList = listItems / 9;
-			      	// add an extra page for potential leftovers
-			      	if (listItems %9 != 0) totalList++;
 			      	
-			     	// page check to verify if goto first makes sense
-			      	if(pageNum == 0) 
-			      	{
-			      		%> <li class="disabled"><span>&laquo;</span></li> <%
+			      	// add an extra page for potential leftovers
+			      	totalList += listItems %9 != 0 ? 1 : 0;
+			      	
+			     	// page check to verify if goto first and goto prev makes sense
+			      	if(pageNum < 1) {
+			      		%> <li class="disabled"><span>&laquo;</span></li>
+			      		<li class="disabled"><span>PREV</span></li> <%
 			      	}
-			      	else
-			      	{
-			      		%> <li><a href="list.jsp?page=1">&laquo;</a></li> <%
+			      	else {
+			      		%> <li><a href="list.jsp?page=1">&laquo;</a></li> 
+			      		<li><a href="list.jsp?page=<%=pageNum%>">PREV</a></li> <%
 			      	}
 			      	
 			     	// list of five, numbers below zero are skipped and stops before limit, if necessary
-			      	for (int i = pageNum - 2, j = 0; i < totalList && j < 5; i++, j++)
-			      	{
-			      		if(i < 0)
-			      		{
-			      			continue;
-			      		}
+			      	for (int i = pageNum - 2, j = 0; i < totalList && j < 5; i++, j++) {
+			      	
+			      		if(i < 0) continue;
+			      		
 			      		// find active button by association of middle button
-			      		else if(j != 2)
-			      		{ 
+			      		else if(j != 2) { 
 					      %>
 					      	<li><a href="list.jsp?page=<%=i+1%>"><%=i+1%></a></li>
 					      <%
 			      		}
-			      		else
-			      		{
-						  %>
-						    <li class="active"><a href="#"><%=i+1%></a></li>
-						  <%
+			      		else {
+					      %>
+							<li class="active"><span><%=i+1%></span></li>
+					      <%
 			      		}
 			      	}
 			      	
-			      	// page check to verify if goto last makes sense
-			      	if(pageNum == (totalList - 1)) 
-			      	{
-			      		%> <li class="disabled"><span>&raquo;</span></li> <%
+			      	// page check to verify if goto next and goto last makes sense
+			      	if(pageNum >= (totalList - 1)) {
+			      		%> <li class="disabled"><span>NEXT</span></li> 
+			      		<li class="disabled"><span>&raquo;</span></li> <%
 			      	}
-			      	else
-			      	{
-			      		%> <li><a href="list.jsp?page=<%=totalList%>">&raquo;</a></li> <%
+			      	else {
+			      		%> <li><a href="list.jsp?page=<%=pageNum+2%>">NEXT</a></li> 
+			      		<li><a href="list.jsp?page=<%=totalList%>">&raquo;</a></li> <%
 			      	}
 			      %>
 			  </ul>
