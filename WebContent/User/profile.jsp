@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
 	if (request.getParameter("ID") == null) {
-		response.sendRedirect("/dan-o/User/main.jsp");
+		response.sendRedirect("/dan-o/User/LoginServlet");
 	}
 %>
 <html>
@@ -66,9 +66,15 @@
 												<c:out value="${result1.rowsByIndex[0][0]}" />
 												User
 											</p>
-											<a class="btn btn-link btn-xs" role="button" href="#">${einformation}</a>
-											<br /> <a class="btn btn-link btn-xs" role="button" href="#">${proPic}</a>
-											<br /> <a class="btn btn-link btn-xs" role="button" href="#">${bacPic}</a>
+											<form action="${pageContext.request.contextPath}/ProfileEditServlet">
+												<input class="btn btn-link btn-xs" type="submit"
+													value="${einformation}"></input>
+												<input type="hidden" name="param_no"
+															value="${row.ID}" /> 
+												<!-- Can merge this into button above and place these options in Edit Page -->
+												<br /> <a class="btn btn-link btn-xs" role="button" href="#">${proPic}</a>
+												<br /> <a class="btn btn-link btn-xs" role="button" href="#">${bacPic}</a>
+											</form>
 										</div>
 									</div>
 									<div class="panel panel-default">
