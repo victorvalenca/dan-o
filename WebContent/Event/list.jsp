@@ -56,12 +56,12 @@
 				<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
 					url="jdbc:mysql://localhost:3307/myplace_data" user="root"
 					password="Woodpecker99" />
-					
+
 					<%
 						// retrieve page parameter from URL, if exists; page number is in zero-starting value
 						String pageNumString = request.getParameter("page");
-						int pageNum = pageNumString != null ? Integer.parseInt(pageNumString) - 1 : 0;	
-						
+						int pageNum = pageNumString != null ? Integer.parseInt(pageNumString) - 1 : 0;
+
 						// minimum and maximum values for page indexing
 					 	int indexMin = pageNum * 9;
 						indexMin++;
@@ -90,7 +90,7 @@
 						<%
 							if ((ctr % 3) == 0) {
 						%>
-					
+
 				</div>
 				<div class="row">
 					<%
@@ -100,7 +100,6 @@
 
 					<form
 						action="${pageContext.request.contextPath}/eventDetailsServlet">
-
 
 						<div class="thumbnail col-md-4">
 							<img
@@ -133,17 +132,17 @@
 					</form>
 					</c:forEach>
 				</div>
-				
+
 			  <ul class="pagination pagination-lg">
 			     <%
 			     	//SQL prerequesites
 			     	Connection cn = null;
 			     	Statement st = null;
 			     	ResultSet rs = null;
-			     
+
 			        // total number of entries in SQL tble
 			      	int listItems = 0;
-			      	
+
 			      	// request the number of values from database
 			      	try {
 						//SQL parameters
@@ -151,7 +150,7 @@
 				     	String url = "jdbc:mysql://localhost:3307/myplace_data";
 				        String user = "root";
 				        String password = "Woodpecker99";
-				        
+
 				        // attempt to establish connection
 			      		cn = DriverManager.getConnection(url, user, password);
 			      		st = cn.createStatement();
@@ -159,7 +158,7 @@
 
 			      		// retrieve value
 			            listItems = rs.next() ? Integer.parseInt(rs.getString(1)) : 0;
-			                
+
 			        }
 			      	catch (Exception e) {}
 			      	finally {
@@ -168,33 +167,33 @@
 		                    if (rs != null) rs.close();
 		                    if (st != null)  st.close();
 		                    if (cn != null) cn.close();
-		            	} 
+		            	}
 		            	catch (SQLException se) {}
 			      	}
-			      	
+
 			      	// the page limit of the pagination menu
 			      	int totalList = listItems / 9;
-			      	
+
 			      	// add an extra page for potential leftovers
 			      	totalList += listItems %9 != 0 ? 1 : 0;
-			      	
+
 			     	// page check to verify if goto first and goto prev makes sense
 			      	if(pageNum < 1) {
 			      		%> <li class="disabled"><span>&laquo;</span></li>
 			      		<li class="disabled"><span>PREV</span></li> <%
 			      	}
 			      	else {
-			      		%> <li><a href="list.jsp?page=1">&laquo;</a></li> 
+			      		%> <li><a href="list.jsp?page=1">&laquo;</a></li>
 			      		<li><a href="list.jsp?page=<%=pageNum%>">PREV</a></li> <%
 			      	}
-			      	
+
 			     	// list of five, numbers below zero are skipped and stops before limit, if necessary
 			      	for (int i = pageNum - 2, j = 0; i < totalList && j < 5; i++, j++) {
-			      	
+
 			      		if(i < 0) continue;
-			      		
+
 			      		// find active button by association of middle button
-			      		else if(j != 2) { 
+			      		else if(j != 2) {
 					      %>
 					      	<li><a href="list.jsp?page=<%=i+1%>"><%=i+1%></a></li>
 					      <%
@@ -205,14 +204,14 @@
 					      <%
 			      		}
 			      	}
-			      	
+
 			      	// page check to verify if goto next and goto last makes sense
 			      	if(pageNum >= (totalList - 1)) {
-			      		%> <li class="disabled"><span>NEXT</span></li> 
+			      		%> <li class="disabled"><span>NEXT</span></li>
 			      		<li class="disabled"><span>&raquo;</span></li> <%
 			      	}
 			      	else {
-			      		%> <li><a href="list.jsp?page=<%=pageNum+2%>">NEXT</a></li> 
+			      		%> <li><a href="list.jsp?page=<%=pageNum+2%>">NEXT</a></li>
 			      		<li><a href="list.jsp?page=<%=totalList%>">&raquo;</a></li> <%
 			      	}
 			      %>

@@ -22,9 +22,9 @@
 				<div class="col-md-6">
 					<!-- IF TO DETERMINE IF RECORDS PRESENT AND AUTHENTICATED -->
 					<h2 style="color: white;">
-						<strong>Manage Organizations</strong>
+						<strong>${infoLn4}</strong>
 					</h2>
-					<p style="color: white;">It's easy and always will be.</p>
+					<p style="color: white;">${infoLn5}</p>
 				</div>
 			</div>
 			<div class="row">
@@ -32,20 +32,16 @@
 					<div class="row">
 						<div class="col-md-12">
 							<h3 style="color: white;">
-								<strong>Connect your business events with consumers
-									around you! </strong>
+								<strong>${infoLnT} </strong>
 							</h3>
 							<p style="color: white;">
-								<span class="glyphicon glyphicon-plus"></span> Create Events and
-								provide Updates
+								<span class="glyphicon glyphicon-plus"></span> ${infoLn1}
 							</p>
 							<p style="color: white;">
-								<span class="glyphicon glyphicon-user"></span> Share Events on
-								your profile
+								<span class="glyphicon glyphicon-user"></span> ${infoLn2}
 							</p>
 							<p style="color: white;">
-								<span class="glyphicon glyphicon-list-alt"></span> Set Guest
-								List and receive RSVP
+								<span class="glyphicon glyphicon-list-alt"></span> ${infoLn3}
 							</p>
 						</div>
 					</div>
@@ -53,23 +49,28 @@
 				<sql:query dataSource="${snapshot}" var="result"> SELECT Organization_ID from User_Has_Organization Where User_ID = ?; <sql:param
 						value="3" />
 				</sql:query>
+
 				<div class="col-md-6">
-					<c:forEach var="row" items="${result.rows}">
-						<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
-								value="9" />
-						</sql:query>
-						<div class="container text-center">
-							<img src="${pageContext.request.contextPath}/assets/img/city_bg.jpg" class="img-circle"
-								height="100" width="100" alt="logo">
-							<p>
-								<a
-									href="${pageContext.request.contextPath}/Organization/profile.jsp?ID=${row.Organization_ID}"
-									style="color: white"><c:out
-										value="${result2.rowsByIndex[0][0]}" /></a>
-							</p>
-						</div>
-					</c:forEach>
+					<form
+						action="${pageContext.request.contextPath}/orgProfileServlet">
+						<c:forEach var="row" items="${result.rows}">
+							<sql:query dataSource="${snapshot}" var="result2"> SELECT Name from Organization where ID = ?; <sql:param
+									value="9" />
+							</sql:query>
+							<div class="container text-center">
+								<img
+									src="${pageContext.request.contextPath}/assets/img/city_bg.jpg"
+									class="img-circle" height="100" width="100" alt="logo">
+								<p>
+									<input class="btn btn-link" type="submit"
+										value="${result2.rowsByIndex[0][0]}" /> <input type="hidden"
+										name="param_no" value="${row.Organization_ID}" /> 
+								</p>
+							</div>
+						</c:forEach>
+					</form>
 				</div>
+
 				<!--<div class="col-md-6">
 					 <form>
 						<div class="row">
@@ -149,6 +150,7 @@
 						</div>
 					</form>
 				</div>-->
+
 			</div>
 		</div>
 	</div>

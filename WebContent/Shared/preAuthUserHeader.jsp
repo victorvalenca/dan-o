@@ -12,13 +12,14 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navcol-1">
 			<ul class="nav navbar-nav">
-				<li class="presentation" role="presentation"><a
-					href="${pageContext.request.contextPath}/about.jsp"> ${about}</a></li>
-				<li role="active"><a
-					href="${pageContext.request.contextPath}/User/main.jsp"> ${user}</a></li>
+				<li class="presentation" role="presentation"><form
+						action="${pageContext.request.contextPath}/aboutServlet">
+						<input class="btn btn-link" type="submit" value="${about}" />
+					</form></li>
 			</ul>
-			
-			<form action="loginServlet" method="post" class="navbar-form navbar-right">
+
+			<form action="loginServlet" method="post"
+				class="navbar-form navbar-right">
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-12">
@@ -27,7 +28,8 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<input class="form-control input-sm" name="lEmail" type="email" required="required">
+							<input class="form-control input-sm" name="lEmail" type="email"
+								required="required">
 						</div>
 					</div>
 				</div>
@@ -39,13 +41,14 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<input class="form-control input-sm" name="lPassword" type="password" required="required">
-							<input type="submit" value="${btnLogin}" class="btn btn-default btn-xs" />
+							<input class="form-control input-sm" name="lPassword"
+								type="password" required="required"> <input
+								type="submit" value="${btnLogin}" class="btn btn-default btn-xs" />
 						</div>
 					</div>
 				</div>
 			</form>
-			
+
 		</div>
 	</div>
 </nav>
