@@ -4,15 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ page import="java.sql.PreparedStatement"  %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.DriverManager" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page import="java.sql.Statement" %>
-<%@ page import="java.util.logging.Level" %>
-<%@ page import="java.util.logging.Logger" %>
-
+<%@ page import="com.myplace.dao.EventListDAO"%>
 <%
 	if (request.getSession().getAttribute("name") == null) response.sendRedirect("/dan-o/User/main.jsp");
 %>
@@ -59,16 +51,11 @@
 					
 					<%
 						// retrieve page parameter from URL, if exists; page number is in zero-starting value
-						String pageNumString = request.getParameter("page");
-						int pageNum = pageNumString != null ? Integer.parseInt(pageNumString) - 1 : 0;	
-						
-						// minimum and maximum values for page indexing
-					 	int indexMin = pageNum * 9;
-						indexMin++;
-						int indexMax = indexMin + 9;
+						String pageNumString = request.getParameter("page");	
+						EventListDAO.setNewPage(pageNumString != null ? Integer.parseInt(pageNumString) : -1);
 					%>
 
-				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event where ID >= <%=indexMin%> and ID < <%=indexMax%>; </sql:query>
+				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event where ID >= <%=EventListDAO.getMinimunIndex()%> and ID < <%=EventListDAO.getMaximumIndex()%>; </sql:query>
 				<div class="row">
 					<%
 						int ctr = 0;
@@ -136,84 +123,50 @@
 				
 			  <ul class="pagination pagination-lg">
 			     <%
-			     	//SQL prerequesites
-			     	Connection cn = null;
-			     	Statement st = null;
-			     	ResultSet rs = null;
+			     	// resource loading
+			     	EventListDAO.setDatabaseSize();
+			     	EventListDAO.setMaxPage();
+			     	EventListDAO.setPageButtons();
+
+			     	// stored variables; will be flushed at button input
+					int pageNum = EventListDAO.getPage();
+			     	int[] DBarr = EventListDAO.getPageButtons();
 			     
 			        // total number of entries in SQL tble
-			      	int listItems = 0;
-			      	
-			      	// request the number of values from database
-			      	try {
-						//SQL parameters
-				      	String sqlStat = "SELECT count(*) from Event";
-				     	String url = "jdbc:mysql://localhost:3307/myplace_data";
-				        String user = "root";
-				        String password = "Woodpecker99";
-				        
-				        // attempt to establish connection
-			      		cn = DriverManager.getConnection(url, user, password);
-			      		st = cn.createStatement();
-			      		rs = st.executeQuery(sqlStat);
-
-			      		// retrieve value
-			            listItems = rs.next() ? Integer.parseInt(rs.getString(1)) : 0;
-			                
-			        }
-			      	catch (Exception e) {}
-			      	finally {
-		      	        // closure of SQL connection
-		                try {
-		                    if (rs != null) rs.close();
-		                    if (st != null)  st.close();
-		                    if (cn != null) cn.close();
-		            	} 
-		            	catch (SQLException se) {}
-			      	}
-			      	
-			      	// the page limit of the pagination menu
-			      	int totalList = listItems / 9;
-			      	
-			      	// add an extra page for potential leftovers
-			      	totalList += listItems %9 != 0 ? 1 : 0;
+			      	int listItems = EventListDAO.getDatabaseSize();
 			      	
 			     	// page check to verify if goto first and goto prev makes sense
-			      	if(pageNum < 1) {
+			      	if(EventListDAO.isAtStart(pageNum)) {
 			      		%> <li class="disabled"><span>&laquo;</span></li>
 			      		<li class="disabled"><span>PREV</span></li> <%
 			      	}
 			      	else {
 			      		%> <li><a href="list.jsp?page=1">&laquo;</a></li> 
-			      		<li><a href="list.jsp?page=<%=pageNum%>">PREV</a></li> <%
+			      		<li><a href="list.jsp?page=<%=pageNum-1%>">PREV</a></li> <%
 			      	}
 			      	
 			     	// list of five, numbers below zero are skipped and stops before limit, if necessary
-			      	for (int i = pageNum - 2, j = 0; i < totalList && j < 5; i++, j++) {
-			      	
-			      		if(i < 0) continue;
-			      		
-			      		// find active button by association of middle button
-			      		else if(j != 2) { 
-					      %>
-					      	<li><a href="list.jsp?page=<%=i+1%>"><%=i+1%></a></li>
-					      <%
+			      	for (int i = 0; i < 5; i++) {
+			      		if (i == 2) {
+						      %>
+								<li class="active"><span><%=DBarr[i]%></span></li>
+						      <%
 			      		}
-			      		else {
-					      %>
-							<li class="active"><span><%=i+1%></span></li>
-					      <%
+			      		else if(DBarr[i] != -1) {
+						      %>
+								<li><a href="list.jsp?page=<%=DBarr[i]%>"><%=DBarr[i]%></a></li>
+						      <%
 			      		}
 			      	}
 			      	
 			      	// page check to verify if goto next and goto last makes sense
-			      	if(pageNum >= (totalList - 1)) {
+			      	if(EventListDAO.isAtEnd(pageNum)) {
 			      		%> <li class="disabled"><span>NEXT</span></li> 
 			      		<li class="disabled"><span>&raquo;</span></li> <%
 			      	}
 			      	else {
-			      		%> <li><a href="list.jsp?page=<%=pageNum+2%>">NEXT</a></li> 
-			      		<li><a href="list.jsp?page=<%=totalList%>">&raquo;</a></li> <%
+			      		%> <li><a href="list.jsp?page=<%=pageNum+1%>">NEXT</a></li> 
+			      		<li><a href="list.jsp?page=<%=EventListDAO.getMaxPage()%>">&raquo;</a></li> <%
 			      	}
 			      %>
 			  </ul>
