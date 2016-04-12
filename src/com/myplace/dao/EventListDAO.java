@@ -28,10 +28,11 @@ public class EventListDAO {
 	// total number of items on database table
 	private static int dbSize = 0;
 	
+	// The maximum number of pages for the datasheet to hold
 	private static int dbMaxPage = 1;
 	
 	// ERROR TAG
-	private static final int ERR = -1;
+	public static final int ERR = -1;
 	
 	public static void setNewPage(int newPageNum) {
 		
