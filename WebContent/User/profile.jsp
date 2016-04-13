@@ -80,7 +80,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading">
 											<h3 class="panel-title">
-												<i class="fa fa-facebook"></i> Facebook
+												<i class="fa fa-facebook"></i>Facebook
 											</h3>
 										</div>
 										<div class="panel-body">
@@ -90,7 +90,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading">
 											<h3 class="panel-title">
-												<i class="fa fa-twitter"></i> Twitter
+												<i class="fa fa-twitter"></i>Twitter
 											</h3>
 										</div>
 										<div class="panel-body">

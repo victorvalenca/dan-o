@@ -71,6 +71,7 @@ public class ProfileEditServlet extends HttpServlet {
 		request.setAttribute("txtLN", rb.getString("um.txtLN"));
 		request.setAttribute("txtEmail", rb.getString("um.txtEmail"));
 		request.setAttribute("txtREmail", rb.getString("um.txtREmail"));
+		request.setAttribute("txtPassword",  rb.getString("um.txtPassword"));
 
 
 		// ================================================================================
