@@ -81,7 +81,7 @@ public class UserProfileServlet extends HttpServlet {
 		// ================================================================================
 
 		//TODO Database DAO
-		
+
 		if (ID == null) {
 			request.getRequestDispatcher("User/profile.jsp?ID=" + request.getSession().getAttribute("UserID")).forward(request, response);
 		} else {
