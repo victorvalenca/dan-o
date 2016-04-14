@@ -69,7 +69,7 @@
 											<form action="${pageContext.request.contextPath}/ProfileEditServlet">
 												<input class="btn btn-link btn-xs" type="submit"
 													value="${einformation}"></input>
-												<input type="hidden" name="param_no"
+												<input type="hidden" name="ID"
 															value="${row.ID}" /> 
 												<!-- Can merge this into button above and place these options in Edit Page -->
 												<br /> <a class="btn btn-link btn-xs" role="button" href="#">${proPic}</a>

@@ -18,7 +18,7 @@
 					</form></li>
 			</ul>
 
-			<form action="loginServlet" method="post"
+			<form action="${pageContext.request.contextPath}/loginServlet" method="post"
 				class="navbar-form navbar-right">
 				<div class="form-group">
 					<div class="row">

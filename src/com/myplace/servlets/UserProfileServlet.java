@@ -33,7 +33,7 @@ public class UserProfileServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String param_no = (String) request.getParameter("param_no");
+		String ID = Integer.toString((int) request.getSession().getAttribute("UserID"));
 
 		// ================================================================================
 		// Internationalization
@@ -43,7 +43,7 @@ public class UserProfileServlet extends HttpServlet {
 		String country = (String) request.getSession().getAttribute("country");
 		Locale locale;
 
-		if (language.equals("fr") && country.equals("FR")) {
+		if ( language != null && (language.equals("fr") && country.equals("FR"))) {
 			language = "fr";
 			country = "FR";
 		} else {
@@ -82,12 +82,10 @@ public class UserProfileServlet extends HttpServlet {
 
 		//TODO Database DAO
 		
-		if (param_no == null) {
-			request.getRequestDispatcher("User/profile.jsp?ID=" + request.getSession().getAttribute("UserID"))
-					.forward(request, response);
+		if (ID == null) {
+			request.getRequestDispatcher("User/profile.jsp?ID=" + request.getSession().getAttribute("UserID")).forward(request, response);
 		} else {
-
-			request.getRequestDispatcher("User/profile.jsp?ID=" + param_no).forward(request, response);
+			request.getRequestDispatcher("User/profile.jsp?ID=" + ID).forward(request, response);
 		}
 	}
 
