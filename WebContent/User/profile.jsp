@@ -69,7 +69,7 @@
 											<form action="${pageContext.request.contextPath}/ProfileEditServlet">
 												<input class="btn btn-link btn-xs" type="submit"
 													value="${einformation}"></input>
-												<input type="hidden" name="param_no"
+												<input type="hidden" name="ID"
 															value="${row.ID}" /> 
 												<!-- Can merge this into button above and place these options in Edit Page -->
 												<br /> <a class="btn btn-link btn-xs" role="button" href="#">${proPic}</a>
@@ -80,7 +80,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading">
 											<h3 class="panel-title">
-												<i class="fa fa-facebook"></i> Facebook
+												<i class="fa fa-facebook"></i>Facebook
 											</h3>
 										</div>
 										<div class="panel-body">
@@ -90,7 +90,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading">
 											<h3 class="panel-title">
-												<i class="fa fa-twitter"></i> Twitter
+												<i class="fa fa-twitter"></i>Twitter
 											</h3>
 										</div>
 										<div class="panel-body">

@@ -91,7 +91,18 @@
 	<servlet-mapping>
 		<servlet-name>profileEdit</servlet-name>
 		<url-pattern>/ProfileEditServlet</url-pattern>
-	</servlet-mapping><welcome-file-list>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>profileEditSubmit</servlet-name>
+		<servlet-class>com.myplace.servlets.ProfileEditSubmit</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>profileEditSubmit</servlet-name>
+		<url-pattern>/profileEditSubmit</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	

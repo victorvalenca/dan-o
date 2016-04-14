@@ -22,7 +22,7 @@
 		password="Woodpecker99" />
 	
 	<!-- Fetch Account information -->
-	<sql:query dataSource="${snapshot}" var="result"> SELECT FirstName, LastName, Email, ProfilePicture, BackgroundPicture, FacebookID, TwitterID FROM User WHERE ID = ?; 
+	<sql:query dataSource="${snapshot}" var="result"> SELECT ID, FirstName, LastName, Email, ProfilePicture, BackgroundPicture, FacebookID, TwitterID FROM User WHERE ID = ?; 
 		<sql:param value='<%=request.getParameter("ID")%>' />
 	</sql:query>
 	<c:forEach var="row" items="${result.rows}">
@@ -43,28 +43,28 @@
 		
 		<!-- Profile Editing Form -->
 		<div class="container">
-		<form>		
+		<form method='post' action="${pageContext.request.contextPath}/profileEditSubmit">		
 				<!--  First/Last name fields -->
 				<div class="row"> 
 					<div class="col-md-6">
 						<div class="form-group">
 							<h3 class="panel-title">${txtFN}</h3>
-							<input class="form-control" type="text"
-								placeholder="${row.FirstName}">
+							<input class="form-control" type="text" name="fn"
+								value="${row.FirstName}">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<h3 class="panel-title">${txtLN}</h3>
-							<input class="form-control" type="text"
-								placeholder="${row.LastName}">
+							<input class="form-control" type="text" name="ln"
+								value="${row.LastName}">
 						</div>
 					</div>
 					<!-- Email field -->
 					<div class="col-md-12">
 						<div class="form-group">
 							<h3 class="panel-title">${txtEmail}</h3>
-							<input class="form-control" type="text" placeholder="${row.Email}">
+							<input class="form-control" type="text" name="email" value="${row.Email}">
 						</div>
 					</div>
 				</div>
@@ -73,7 +73,7 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<input class="form-control" type="text"
+							<input class="form-control" type="text" name="fbID"
 							<% 	// Null-check on Facebook/Twitter IDs as they're not mandatory fields during sign-up
 								if (session.getAttribute("${row.FacebookID}") == null) {
 							%>
@@ -81,7 +81,7 @@
 							<%
 								} else {
 							%>
-								placeholder=${row.FacebookID}>
+								value=${row.FacebookID}>
 							<%
 								}
 							%>
@@ -89,7 +89,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<input class="form-control" type="text"
+							<input class="form-control" type="text" name="twID"
 							<% 
 								if (session.getAttribute("${row.TwitterID}") == null) {
 							%>
@@ -97,18 +97,28 @@
 							<%
 								} else {
 							%>
-								placeholder=${row.TwitterID}>
+								value=${row.TwitterID}>
 							<%
 								}
 							%>
 						</div>
 					</div>
 				</div>
+				<!-- Password change-->
+				<div class="col-md-6">
+					<div class="form-group">
+						<h3 class="panel-title">${txtPassword}</h3>
+						<input class="form-control" type="password" name="passChange" placeholder="${txtPassword}">
+					</div>
+				</div>
+				<!-- Submit Button -->
 				<div class="row">
 					<div class="col-md-12">
 						<div class="row">
 							<div class="col-md-3">
-								<button class="btn btn-default" type="button">OK</button>
+								<input class="btn btn-default" type="submit" value="OK"></input>
+								<input type="hidden" name="ID"
+									value="${row.ID}" /> 
 							</div>
 						</div>
 					</div>

@@ -34,11 +34,10 @@ public class LoginServlet extends HttpServlet {
 		if (LoginDao.validate(n, p)) {
 			ID = LoginDao.getID(n);
 			session.setAttribute("UserID", ID);
-			RequestDispatcher rd = request.getRequestDispatcher("/userProfileServlet");
-			rd.forward(request, response);
+			request.getRequestDispatcher("userProfileServlet").forward(request, response);
 		} else {
 			out.print("<p style=\"color:red\">Sorry email or password error</p>");
-			RequestDispatcher rd = request.getRequestDispatcher("/localeServlet");
+			RequestDispatcher rd = request.getRequestDispatcher("localeServlet");
 			rd.include(request, response);
 		}
 

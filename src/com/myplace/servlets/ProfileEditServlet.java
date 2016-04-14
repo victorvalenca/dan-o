@@ -30,7 +30,7 @@ public class ProfileEditServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String param_no = (String) request.getParameter("param_no");
+		String ID = (String) request.getParameter("ID");
 
 		// ================================================================================
 		// Internationalization
@@ -71,6 +71,7 @@ public class ProfileEditServlet extends HttpServlet {
 		request.setAttribute("txtLN", rb.getString("um.txtLN"));
 		request.setAttribute("txtEmail", rb.getString("um.txtEmail"));
 		request.setAttribute("txtREmail", rb.getString("um.txtREmail"));
+		request.setAttribute("txtPassword",  rb.getString("um.txtPassword"));
 
 
 		// ================================================================================
@@ -79,10 +80,10 @@ public class ProfileEditServlet extends HttpServlet {
 	
 		//TODO Database DAO
 		
-		if (param_no == null) {
-			request.getRequestDispatcher("User/profileEdit.jsp").forward(request, response);
+		if (ID == null) {
+			request.getRequestDispatcher("User/profileEdit.jsp?ID=" + request.getSession().getAttribute("UserID")).forward(request, response);
 		} else {
-			request.getRequestDispatcher("User/profileEdit.jsp?ID=" + param_no).forward(request, response);
+			request.getRequestDispatcher("User/profileEdit.jsp?ID=" + ID).forward(request, response);
 		}
 	
 	}
