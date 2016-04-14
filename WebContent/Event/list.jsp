@@ -52,7 +52,7 @@
 					<%
 						// retrieve page parameter from URL, if exists; page number is in zero-starting value
 						String pageNumString = request.getParameter("page");	
-						EventListDAO.setNewPage(pageNumString != null ? Integer.parseInt(pageNumString) : EventListDAO.ERR);
+						EventListDAO.setNewPage(pageNumString != null ? Integer.parseInt(pageNumString) : 1);
 					%>
 
 				<sql:query dataSource="${snapshot}" var="result"> SELECT * from Event where ID >= <%=EventListDAO.getMinimunIndex()%> and ID < <%=EventListDAO.getMaximumIndex()%>; </sql:query>
